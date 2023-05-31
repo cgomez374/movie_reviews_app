@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!--SHOWCASE OF THE PAGE-->
+<div>
+    <h1>Welcome!</h1>
+    <h2>Review any and all movies!</h2>
+</div>
+
+<!--POPULAR MOVIES-->
+<div>
+    <h3>POPULAR MOVIES</h3>
+    <ul>
+        {% for movie in popular_movies %}
+        <a href="{{ url_for('show_movie', movie_id=movie.id) }}"><img src="https://image.tmdb.org/t/p/w500/{{ movie['poster_path'] }}" alt="movie poster"></a>
+        {% endfor %}
+    </ul>
+
+</div>
+<!--LATEST MOVIES-->
+<div>
+    <h3>LATEST MOVIES</h3>
+    <ul>
+        {% for movie in latest_movies %}
+        <a href="{{ url_for('show_movie', movie_id=movie.id) }}"><img src="https://image.tmdb.org/t/p/w500/{{ movie['poster_path'] }}" alt="movie poster"></a>
+        {% endfor %}
+    </ul>
+</div>
+<!--SEARCH BUTTON-->
+<!--BROWSE ALL BUTTON-->
+<div>
+    <button><a href="{{ url_for('search_movie') }}">SEARCH A MOVIE</a></button>
+    <button><a href="{{ url_for('browse_all_movies', current_page=1) }}">BROWSE ALL MOVIES</a></button>
+</div>
+
+
+
+
+
+
+
+
+{% endblock %}

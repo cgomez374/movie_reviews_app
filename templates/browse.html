@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>browse all movies</h2>
+
+<ul>
+    {% for movie in movies %}
+        {% if movie['poster_path'] %}
+        <li>
+            <a href="{{ url_for('show_movie', movie_id=movie.id) }}">
+                <img src="https://image.tmdb.org/t/p/w500/{{ movie['poster_path'] }}" alt="movie poster">
+            </a>
+        </li>
+        {% endif %}
+    {% endfor %}
+</ul>
+
+<div>
+    {% if not current_page == 1 %}
+    <a href="{{ url_for('browse_all_movies', current_page=current_page-1) }}"><button>Previous</button></a>
+    {% else %}
+    <button disabled>Previous</button>
+    {% endif %}
+    <a href="{{ url_for('browse_all_movies', current_page=current_page+1) }}"><button>Next</button></a>
+</div>
+
+{% endblock %}
