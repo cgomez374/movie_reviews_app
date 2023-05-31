@@ -15,11 +15,10 @@ def main():
     if popular_movies_response.status_code == 200 and latest_movies_response.status_code == 200:
         popular_movies = [popular_movies_response.json()['results'][i]
                           for i in range(0, len(popular_movies_response.json()['results']))
-                          if i < 5]
+                          if i < 10]
         latest_movies = [latest_movies_response.json()['results'][i]
                          for i in range(0, len(latest_movies_response.json()['results']))
-                         if i < 5]
-        print(popular_movies[0])
+                         if i < 10]
     else:
         print(f'Popular query status code: ', popular_movies_response.status_code)
         print(f'Latest query status code: ', latest_movies_response.status_code)
@@ -43,9 +42,10 @@ def search_movie():
         response = requests.get(search_movie_endpoint + movie_title)
         if response.status_code == 200:
             results = response.json()['results']
+            return render_template('search.html', movies=results)
         else:
             print(response.status_code)
-    return render_template('search.html', movies=results)
+    return render_template('search.html', movies=[])
 
 
 @app.route('/browse/<int:current_page>')

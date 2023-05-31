@@ -2,9 +2,12 @@
 
 {% block content %}
 
-<h2>browse all movies</h2>
+<div class="subtitle">
+    <h2>browse all movies</h2>
+</div>
 
-<ul>
+<div class="categories">
+    <ul>
     {% for movie in movies %}
         {% if movie['poster_path'] %}
         <li>
@@ -14,9 +17,9 @@
         </li>
         {% endif %}
     {% endfor %}
-</ul>
-
-<div>
+    </ul>
+</div>
+<div class="buttons">
     {% if not current_page == 1 %}
     <a href="{{ url_for('browse_all_movies', current_page=current_page-1) }}"><button>Previous</button></a>
     {% else %}
