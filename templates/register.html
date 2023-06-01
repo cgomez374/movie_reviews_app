@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div>
+    <h2>Register</h2>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class="flashes">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+    <form id="form" action="{{ url_for('register') }}" autocomplete="off" method="POST">
+        <input type="text" name="first_name" placeholder="first name" required>
+        <input type="text" name="last_name" placeholder="last name" required>
+        <input type="email" name="email" placeholder="email" required>
+        <input type="password"
+               name="password"
+               placeholder="password"
+               minlength="8"
+               maxlength="16"
+               pattern="[0-9a-fA-F]{8, 16}"
+               autocomplete="new-password"
+               required>
+        <button type="submit">register</button>
+    </form>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

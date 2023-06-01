@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div>
+    <h2>Login</h2>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class="flashes">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+    <form id="form" method="POST" action="{{ url_for('login') }}" autocomplete="off">
+        <input type="email"
+               name="email"
+               placeholder="email"
+               required>
+        <input type="password"
+               name="password"
+               placeholder="password"
+               minlength="8"
+               maxlength="16"
+               autocomplete="new-password"
+               required>
+        <button type="submit">login</button>
+    </form>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

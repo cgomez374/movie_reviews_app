@@ -8,8 +8,8 @@
 }
 
 body {
-    background: #f2f2f2;
-    color: #222831;
+    background: #222831;
+    color: #f2f2f2;
 
 }
 
@@ -57,7 +57,7 @@ a {
 .reviews li {
     margin: 2vh;
     text-transform: capitalize;
-    color: #222831;
+    color: #f2f2f2;
 }
 
 .reviews li h4, .reviews li p {
@@ -88,7 +88,7 @@ a {
 }
 
 .nav ul li a {
-    color: #222831;
+    color: #f2f2f2;
     font-size: 1rem;
     text-transform: capitalize;
 }
@@ -124,7 +124,7 @@ a {
 .categories h3 {
     margin: 20px;
     font-size: 2rem;
-    color: #222831;
+    color: #f2f2f2;
 }
 
 .categories ul {
@@ -169,13 +169,13 @@ a {
 }
 
 .buttons button, .form button {
-    background-color: black;
+    background-color: #f96d00;
     width: 30vh;
     height: 7vh;
     margin: 20px;
 
     font-size: 1.2rem;
-    color: white;
+    color: #f2f2f2;
 
     border: none;
     cursor: pointer;

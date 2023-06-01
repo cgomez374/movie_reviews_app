@@ -16,12 +16,17 @@
 
                 <!-- Main landing page -->
                 <li><a href="{{ url_for('main') }}">Home</a></li>
+                {% if logged_in %}
                 <!-- user will be able to see their reviews -->
                 <li><a href="#">Account</a></li>
+                <li><a href="{{ url_for('logout') }}">Log out</a></li>
+                {% endif %}
 
                 <!--If user is not logged in-->
-                <li><a href="#">Login</a></li>
-                <li><a href="#">Register</a></li>
+                {% if not logged_in %}
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('register') }}">Register</a></li>
+                {% endif %}
 
                 <!-- Browse all movies regardless of login status -->
                 <li><a href="{{ url_for('browse_all_movies', current_page=1) }}">Browse All Movies</a></li>
@@ -29,6 +34,8 @@
             </ul>
         </nav>
     </header>
-    {% block content %} {% endblock %}
+    {% block content %}
+
+    {% endblock %}
 </body>
 </html>
