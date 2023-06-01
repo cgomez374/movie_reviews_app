@@ -2,20 +2,28 @@
 
 {% block content %}
 
-<h2>search</h2>
-<form action="{{ url_for('search_movie') }}" method="POST">
+<div class="subtitle">
+    <h2>search for a movie</h2>
+</div>
+<form class="form" action="{{ url_for('search_movie') }}" method="POST">
     <input type="text" placeholder="Enter movie title" name="title" required>
     <button type="submit">search</button>
 </form>
 <!--SEARCH RESULTS-->
-<div>
+{% if movies %}
+<div class="categories">
     <ul>
         {% for movie in movies %}
+        {% if movie['poster_path'] %}
         <li>
-            <a href="{{ url_for('show_movie', movie_id=movie.id) }}"><img src="https://image.tmdb.org/t/p/w500/{{ movie['poster_path'] }}" alt="movie poster"></a>
+            <a href="{{ url_for('show_movie', movie_id=movie.id) }}">
+                <img src="https://image.tmdb.org/t/p/w500/{{ movie['poster_path'] }}" alt="movie poster">
+            </a>
         </li>
+        {% endif %}
         {% endfor %}
     </ul>
 </div>
+{% endif %}
 
 {% endblock %}

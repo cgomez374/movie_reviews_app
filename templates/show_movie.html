@@ -2,13 +2,42 @@
 
 {% block content %}
 
-<div>
-  <img src="https://image.tmdb.org/t/p/w500/{{ movie['poster_path'] }}" alt="movie poster">
-  <div>
-    <h2>{{ movie['title'] }}</h2>
-    <p>{{ movie['release_date'] }}</p>
-    <p>{{ movie['overview'] }}</p>
+<div class="col div">
+  <div id="show-movie">
+    <div>
+      <img src="https://image.tmdb.org/t/p/w500/{{ movie['poster_path'] }}" alt="movie poster">
+    </div>
+    <div id="movie-details">
+      <h2>{{ movie['title'] }}</h2>
+      <p>{{ movie['release_date'] }}</p>
+      <p>{{ movie['overview'] }}</p>
+    </div>
   </div>
+  <div class="div">
+      <h3 class="sub-subtitle">reviews</h3>
+      <ul class="reviews">
+        <li class="">
+          <h4>author says: </h4>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid animi consequatur consequuntur dolores doloribus eos et eveniet iure, laboriosam mollitia natus obcaecati officiis perferendis praesentium qui repudiandae sed sequi vero!</p>
+        </li>
+        <li>
+          <h4>author says: </h4>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid animi consequatur consequuntur dolores doloribus eos et eveniet iure, laboriosam mollitia natus obcaecati officiis perferendis praesentium qui repudiandae sed sequi vero!</p>
+        </li>
+        <li>
+          <h4>author says: </h4>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid animi consequatur consequuntur dolores doloribus eos et eveniet iure, laboriosam mollitia natus obcaecati officiis perferendis praesentium qui repudiandae sed sequi vero!</p>
+        </li>
+        <li>
+          <h4>author says: </h4>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid animi consequatur consequuntur dolores doloribus eos et eveniet iure, laboriosam mollitia natus obcaecati officiis perferendis praesentium qui repudiandae sed sequi vero!</p>
+        </li>
+        <li>
+          <h4>author says: </h4>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid animi consequatur consequuntur dolores doloribus eos et eveniet iure, laboriosam mollitia natus obcaecati officiis perferendis praesentium qui repudiandae sed sequi vero!</p>
+        </li>
+      </ul>
+    </div>
 </div>
 
 {% endblock %}

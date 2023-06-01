@@ -1,10 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&family=Poppins&display=swap');
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: #f2f2f2;
+    color: #222831;
+
 }
 
 ul li {
@@ -15,8 +21,51 @@ a {
     text-decoration: none;
 }
 
+.col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.div {
+    width: 85%;
+    height: auto;
+    margin: 1vh auto;
+}
+
+.sub-subtitle {
+    font-size: 1.5rem;
+    margin: 5vh auto;
+    text-transform: capitalize;
+    text-align: center;
+}
+
+.reviews {
+    background: #f96d00;
+    padding: 1vh;
+    border-radius: 5vh;
+}
+
+.reviews li {
+    margin: 2vh;
+    text-transform: capitalize;
+    color: #222831;
+}
+
+.reviews li h4, .reviews li p {
+    margin: 2vh;
+}
+
 .nav {
-    background-color: black;
+    background: #f96d00;
     width: 100%;
     height: 8vh;
     display: flex;
@@ -39,7 +88,7 @@ a {
 }
 
 .nav ul li a {
-    color: white;
+    color: #222831;
     font-size: 1rem;
     text-transform: capitalize;
 }
@@ -59,7 +108,7 @@ a {
 }
 
 .categories {
-    background-color: black;
+    background: #f96d00;
     width: 85%;
     height: auto;
     margin: 50px auto;
@@ -68,16 +117,18 @@ a {
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
+
+    border-radius: 5vh;
 }
 
 .categories h3 {
     margin: 20px;
     font-size: 2rem;
-    color: white;
+    color: #222831;
 }
 
 .categories ul {
-    width: 80%;
+    width: 90%;
     height: auto;
     margin: 10px;
     display: flex;
@@ -96,6 +147,7 @@ a {
 .categories ul li a img {
     width: 100%;
     height: 100%;
+    border-radius: 5vh;
 }
 
 .subtitle {
@@ -116,7 +168,7 @@ a {
     align-items: center;
 }
 
-.buttons button {
+.buttons button, .form button {
     background-color: black;
     width: 30vh;
     height: 7vh;
@@ -128,11 +180,63 @@ a {
     border: none;
     cursor: pointer;
 
+    border-radius: 5vh;
+
 }
 
-footer {
-    background-color: black;
-    width: 100%;
-    height: 8vh;
+.form {
+    width: 85%;
+    height: auto;
+    margin: 10px auto;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+
+}
+
+.form input {
+    width: 70%;
+    height: 7vh;
+    margin: 10px;
+    padding: 10px;
+    border: 2px black solid;
+    font-size: 1.2rem;
+    color: black;
+
+    border-radius: 5vh;
+}
+
+#show-movie {
+    width: 90%;
+    height: auto;
+
+    margin: 20px auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+
+}
+
+#show-movie img {
+    border-radius: 5vh;
+}
+
+#movie-details {
+    width: 85%;
+    height: 30vh;
+    margin: 0 auto;
+    padding: 2vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    text-align: center;
+
+    font-size: 1.3rem;
+
 }
 
