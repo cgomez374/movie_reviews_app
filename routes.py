@@ -1,5 +1,6 @@
-from main import app, render_template, url_for, redirect, request, flash, login_manager, login_user, LoginManager, login_required, current_user, logout_user
-from models import db, User
+from main import app, render_template, url_for, redirect, request, flash, login_manager, login_user, LoginManager, \
+    login_required, current_user, logout_user
+from models import db, User, Review
 import requests
 
 # Movies endpoint
@@ -31,7 +32,8 @@ def main():
     else:
         print(f'Popular query status code: ', popular_movies_response.status_code)
         print(f'Latest query status code: ', latest_movies_response.status_code)
-    return render_template('index.html', popular_movies=popular_movies, latest_movies=latest_movies, logged_in=current_user.is_authenticated)
+    return render_template('index.html', popular_movies=popular_movies, latest_movies=latest_movies,
+                           logged_in=current_user.is_authenticated)
 
 
 @app.route('/movie/<int:movie_id>')
@@ -39,8 +41,30 @@ def show_movie(movie_id):
     movie_details_endpoint = f'https://api.themoviedb.org/3/movie/{movie_id}?api_key={API_KEY}'
     response = requests.get(movie_details_endpoint)
     if response.status_code == 200:
+        # Get the movie details from API
         movie = response.json()
-    return render_template('show_movie.html', movie=movie, logged_in=current_user.is_authenticated)
+
+        # Get all reviews for this movie from DB
+        all_reviews = Review.query.filter_by(movie_id=movie_id).all()
+
+        # has the user left a review?
+        has_reviewed = False
+        current_user_review = None
+        current_user_review_id = None
+
+        # Get the review that the current user has written from DB if logged in
+        if current_user.is_authenticated:
+            current_user_review = Review.query.filter_by(author_id=current_user.id).filter_by(movie_id=movie_id).first()
+            if current_user_review:
+                has_reviewed = True
+                current_user_review_id = current_user_review.id
+        return render_template('show_movie.html',
+                               movie=movie,
+                               reviews=all_reviews,
+                               logged_in=current_user.is_authenticated,
+                               has_reviewed=has_reviewed,
+                               current_user_review_id=current_user_review_id)
+    return render_template('404_not_found.html')
 
 
 @app.route('/search', methods=['GET', 'POST'])
@@ -68,18 +92,18 @@ def browse_all_movies(current_page):
         movies = response.json()['results']
     else:
         print(response.status_code)
-    return render_template('browse.html', movies=movies, current_page=current_page, logged_in=current_user.is_authenticated)
+    return render_template('browse.html', movies=movies, current_page=current_page,
+                           logged_in=current_user.is_authenticated)
 
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-
     # STILL NEED TO BUILD IN SOME VALIDATION FOR THE EMAIL; HTML NOT ENOUGH!!!!!
 
     if request.method == 'POST':
         # Build the user model
         new_user = User(
-            name=request.form.get('first_name')+' '+request.form.get('last_name'),
+            name=request.form.get('first_name') + ' ' + request.form.get('last_name'),
             email=request.form.get('email')
         )
         # set the password
@@ -116,3 +140,75 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('main'))
+
+
+# NEED TO DISABLE BACK BUTTON OR AT LEAST NOT ALLOW TO ADD THE SAME POST AGAIN!!!!
+
+@app.route('/new-review/<int:movie_id>', methods=['GET', 'POST'])
+@login_required
+def new_review(movie_id):
+    current_user_review = Review.query.filter_by(author_id=current_user.id).filter_by(movie_id=movie_id).first()
+    if current_user_review is None:
+        movie_details_endpoint = f'https://api.themoviedb.org/3/movie/{movie_id}?api_key={API_KEY}'
+        response = requests.get(movie_details_endpoint)
+        movie = None
+        if response.status_code == 200:
+            movie = response.json()
+
+        if request.method == 'POST':
+            review = Review(
+                content=request.form.get('content'),
+                movie_name=movie['title'],
+                movie_id=movie_id,
+                author_id=int(current_user.id)
+            )
+
+            # add to db
+            db.session.add(review)
+
+            # commit changes
+            try:
+                db.session.commit()
+                return redirect(url_for('show_movie', movie_id=movie_id, logged_in=current_user.is_authenticated))
+            except:
+                db.session.rollback()
+    else:
+        return redirect(url_for('show_movie', movie_id=movie_id, logged_in=current_user.is_authenticated))
+    return render_template('new_review.html', movie_id=movie_id, logged_in=current_user.is_authenticated)
+
+
+@app.route('/edit-review/<int:current_user_review_id>', methods=['GET', 'POST'])
+@login_required
+def edit_review(current_user_review_id):
+    review = Review.query.get(current_user_review_id)
+    if request.method == 'POST':
+        review.content = request.form.get('content')
+        # commit changes
+        try:
+            db.session.commit()
+        except:
+            db.session.rollback()
+        return redirect(url_for('show_movie', movie_id=review.movie_id, logged_in=current_user.is_authenticated))
+    return render_template('edit_review.html', current_user_review_id=current_user_review_id,
+                           logged_in=current_user.is_authenticated)
+
+
+@app.route('/delete-review/<int:current_user_review_id>', methods=['GET'])
+@login_required
+def delete_review(current_user_review_id):
+    review_to_delete = Review.query.get(current_user_review_id)
+    movie_id = review_to_delete.movie_id
+    db.session.delete(review_to_delete)
+    try:
+        db.session.commit()
+    except:
+        db.session.rollback()
+    return redirect(url_for('show_movie', movie_id=movie_id, logged_in=current_user.is_authenticated))
+
+
+@app.route('/account')
+@login_required
+def user_account():
+    for review in current_user.reviews:
+        print(review.movie_name)
+    return render_template("account.html", user=current_user, logged_in=current_user.is_authenticated)

@@ -49,7 +49,7 @@ a {
 }
 
 .reviews {
-    background: #f96d00;
+    background: #393e46;
     padding: 1vh;
     border-radius: 5vh;
 }
@@ -65,7 +65,7 @@ a {
 }
 
 .nav {
-    background: #f96d00;
+    background: #393e46;
     width: 100%;
     height: 8vh;
     display: flex;
@@ -108,7 +108,7 @@ a {
 }
 
 .categories {
-    background: #f96d00;
+    background: #393e46;
     width: 85%;
     height: auto;
     margin: 50px auto;

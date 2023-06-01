@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div>
+  <h2>write a review</h2>
+  <form method="POST" action="{{ url_for('new_review', movie_id=movie_id) }}" autocomplete="off">
+    <textarea name="content" id="content" cols="30" rows="10"></textarea>
+    <button type="submit">submit</button>
+  </form>
+</div>
+
+{% endblock %}

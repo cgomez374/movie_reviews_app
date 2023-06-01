@@ -9,33 +9,33 @@
     <title>Movie Reviews</title>
 </head>
 <body>
-    <header>
-        <nav class="nav">
-            <ul>
-                <!--User can only see these links if they are logged in-->
+<header>
+    <nav class="nav">
+        <ul>
+            <!--User can only see these links if they are logged in-->
 
-                <!-- Main landing page -->
-                <li><a href="{{ url_for('main') }}">Home</a></li>
-                {% if logged_in %}
-                <!-- user will be able to see their reviews -->
-                <li><a href="#">Account</a></li>
-                <li><a href="{{ url_for('logout') }}">Log out</a></li>
-                {% endif %}
+            <!-- Main landing page -->
+            <li><a href="{{ url_for('main') }}">Home</a></li>
+            {% if logged_in %}
+            <!-- user will be able to see their reviews -->
+            <li><a href="{{ url_for('user_account') }}">Account</a></li>
+            <li><a href="{{ url_for('logout') }}">Log out</a></li>
+            {% endif %}
 
-                <!--If user is not logged in-->
-                {% if not logged_in %}
-                <li><a href="{{ url_for('login') }}">Login</a></li>
-                <li><a href="{{ url_for('register') }}">Register</a></li>
-                {% endif %}
+            <!--If user is not logged in-->
+            {% if not logged_in %}
+            <li><a href="{{ url_for('login') }}">Login</a></li>
+            <li><a href="{{ url_for('register') }}">Register</a></li>
+            {% endif %}
 
-                <!-- Browse all movies regardless of login status -->
-                <li><a href="{{ url_for('browse_all_movies', current_page=1) }}">Browse All Movies</a></li>
-                <li><a href="{{ url_for('search_movie') }}">search a movie</a></li>
-            </ul>
-        </nav>
-    </header>
-    {% block content %}
+            <!-- Browse all movies regardless of login status -->
+            <li><a href="{{ url_for('browse_all_movies', current_page=1) }}">Browse All Movies</a></li>
+            <li><a href="{{ url_for('search_movie') }}">search a movie</a></li>
+        </ul>
+    </nav>
+</header>
+{% block content %}
 
-    {% endblock %}
+{% endblock %}
 </body>
 </html>

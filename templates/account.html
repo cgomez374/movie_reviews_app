@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div>
+  <h2>welcome, {{user.name}}</h2>
+  <p>email: {{user.email}}</p>
+  {% if user.reviews %}
+  <h3>here are your reviews</h3>
+  <ul>
+    {% for review in user.reviews %}
+    <li>
+      <p><a href="{{ url_for('show_movie', movie_id=review.movie_id) }}">{{ review.movie_name }}</a></p>
+      <p>{{ review.content }}</p>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <h3>start reviewing now</h3>
+  {% endif %}
+</div>
+
+{% endblock %}
