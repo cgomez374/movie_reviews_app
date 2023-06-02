@@ -17,10 +17,12 @@
         <input type="email"
                name="email"
                placeholder="email"
+               pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+               title="user@email.com"
                required>
         <input type="password"
                name="password"
-               placeholder="password"
+               placeholder="password (ex. Password123)"
                minlength="8"
                maxlength="16"
                autocomplete="new-password"
@@ -28,19 +30,4 @@
         <button type="submit">login</button>
     </form>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 {% endblock %}

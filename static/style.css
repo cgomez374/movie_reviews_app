@@ -228,14 +228,13 @@ p {
     color: black;
 
     border-radius: 5vh;
-    text-transform: capitalize;
+    text-transform: none;
 }
 
 #show-movie {
     width: 85%;
     height: auto;
-
-    margin: 20px auto;
+    margin: 5vh auto;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -250,7 +249,7 @@ p {
 #movie-details {
     background: #393e46;
     width: 50%;
-    height: 50vh;
+    height: auto;
     margin: 0 auto;
     padding: 2vh;
 
@@ -260,13 +259,28 @@ p {
     align-items: center;
     text-align: center;
 
-    font-size: 1.3rem;
+    font-size: 1rem;
+    text-transform: capitalize;
     border-radius: 5vh;
 
 }
 
+#movie-details ul {
+    width: auto;
+    height: auto;
+    padding: 0;
+}
+
+#movie-details ul li {
+    margin: 0 5px;
+}
+
 #movie-details h2 {
     color: #f96d00;
+}
+
+#movie-details h2, #movie-details p {
+    margin: 1.3vh auto;
 }
 
 .flashes {
@@ -274,7 +288,7 @@ p {
     text-transform: capitalize;
 }
 
-#review_content {
+#new_review_content, #edit_review_content {
     width: 70%;
     height: auto;
     padding: 1vh;

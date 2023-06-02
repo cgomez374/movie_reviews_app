@@ -8,8 +8,17 @@
             <img src="https://image.tmdb.org/t/p/w500/{{ movie['poster_path'] }}" alt="movie poster">
         </div>
         <div id="movie-details">
-            <h2>{{ movie['title'] }}</h2>
-            <p>{{ movie['release_date'] }}</p>
+            <h2>{{ movie['title'].title() }}</h2>
+            {% if movie['tagline'] %}
+            <h4>"{{ movie['tagline'].title() }}"</h4>
+            {% endif %}
+            <p>release date: {{ movie['release_date'] }}</p>
+            <ul class="row">
+                <li><p>genres: </p></li>
+                {% for genre in movie['genres'] %}
+                <li><p>{{ genre.name }}</p></li>
+                {% endfor %}
+            </ul>
             <p>{{ movie['overview'] }}</p>
         </div>
     </div>

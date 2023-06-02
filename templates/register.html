@@ -14,12 +14,16 @@
         {% endif %}
     {% endwith %}
     <form class="form" action="{{ url_for('register') }}" autocomplete="off" method="POST">
-        <input type="text" name="first_name" placeholder="first name" required>
-        <input type="text" name="last_name" placeholder="last name" required>
-        <input type="email" name="email" placeholder="email" required>
+        <input type="text" name="first_name" placeholder="first name" minlength="3" required>
+        <input type="text" name="last_name" placeholder="last name" minlength="3" required>
+        <input type="email"
+               name="email"
+               placeholder="email"
+               pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+               required>
         <input type="password"
                name="password"
-               placeholder="password"
+               placeholder="password (ex. Password123)"
                minlength="8"
                maxlength="16"
                pattern="[0-9a-fA-F]{8, 16}"

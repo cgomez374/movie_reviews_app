@@ -1,7 +1,8 @@
 from main import app, render_template, url_for, redirect, request, flash, login_manager, login_user, LoginManager, \
-    login_required, current_user, logout_user
+    login_required, current_user, logout_user, abort
 from models import db, User, Review
 import requests
+from functools import wraps
 
 # Movies endpoint
 API_KEY = '2981946d7a75ea943692c98fb27ce426'
@@ -14,6 +15,20 @@ latest_movies_endpoint = f'https://api.themoviedb.org/3/movie/now_playing?api_ke
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+
+
+def is_author(function):
+    @wraps(function)
+    def wrapper(*args, **kwargs):
+        if request.method == 'GET':
+            if 'edit-review' in request.path or 'delete-review' in request.path:
+                path_split = request.path.split('/')
+                review_id = path_split[len(path_split) - 1]
+                review = Review.query.get(review_id)
+                if review.author_id != current_user.id:
+                    abort(403)
+        return function(*args, **kwargs)
+    return wrapper
 
 
 @app.route('/')
@@ -43,15 +58,12 @@ def show_movie(movie_id):
     if response.status_code == 200:
         # Get the movie details from API
         movie = response.json()
-
         # Get all reviews for this movie from DB
         all_reviews = Review.query.filter_by(movie_id=movie_id).all()
-
         # has the user left a review?
         has_reviewed = False
         current_user_review = None
         current_user_review_id = None
-
         # Get the review that the current user has written from DB if logged in
         if current_user.is_authenticated:
             current_user_review = Review.query.filter_by(author_id=current_user.id).filter_by(movie_id=movie_id).first()
@@ -107,10 +119,8 @@ def register():
         )
         # set the password
         new_user.set_password(request.form.get('password').strip())
-
         # add to db
         db.session.add(new_user)
-
         # commit db
         try:
             db.session.commit()
@@ -126,9 +136,12 @@ def register():
 def login():
     if request.method == 'POST':
         user = User.query.filter_by(email=request.form.get('email')).first()
-        if not user or not user.check_password(request.form.get('password')):
-            flash('incorrect email/password combination')
+        if not user:
+            flash('no user found')
             return redirect(url_for('register'))
+        elif not user.check_password(request.form.get('password')):
+            flash('incorrect email/password combination')
+            return redirect(url_for('login'))
         # login user
         login_user(user)
         return redirect(url_for('main'))
@@ -178,22 +191,27 @@ def new_review(movie_id):
 
 @app.route('/edit-review/<int:current_user_review_id>', methods=['GET', 'POST'])
 @login_required
+@is_author
 def edit_review(current_user_review_id):
     review = Review.query.get(current_user_review_id)
     if request.method == 'POST':
-        review.content = request.form.get('content')
-        # commit changes
-        try:
-            db.session.commit()
-        except:
-            db.session.rollback()
-        return redirect(url_for('show_movie', movie_id=review.movie_id, logged_in=current_user.is_authenticated))
-    return render_template('edit_review.html', current_user_review_id=current_user_review_id,
+        if review.content.strip().lower() == request.form.get('content').strip().lower():
+            flash('There is no change')
+        else:
+            review.content = request.form.get('content')
+            # commit changes
+            try:
+                db.session.commit()
+            except:
+                db.session.rollback()
+            return redirect(url_for('show_movie', movie_id=review.movie_id, logged_in=current_user.is_authenticated))
+    return render_template('edit_review.html', current_content=review.content, current_user_review_id=current_user_review_id,
                            logged_in=current_user.is_authenticated)
 
 
 @app.route('/delete-review/<int:current_user_review_id>', methods=['GET'])
 @login_required
+@is_author
 def delete_review(current_user_review_id):
     review_to_delete = Review.query.get(current_user_review_id)
     movie_id = review_to_delete.movie_id
@@ -208,6 +226,4 @@ def delete_review(current_user_review_id):
 @app.route('/account')
 @login_required
 def user_account():
-    for review in current_user.reviews:
-        print(review.movie_name)
     return render_template("account.html", user=current_user, logged_in=current_user.is_authenticated)
