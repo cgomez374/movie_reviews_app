@@ -3,10 +3,10 @@ from main import app, render_template, url_for, redirect, request, flash, login_
 from models import db, User, Review
 import requests
 from functools import wraps
+import os
 
 # Movies endpoint
-API_KEY = '2981946d7a75ea943692c98fb27ce426'
-
+API_KEY = os.getenv('API_KEY')
 popular_movies_endpoint = f'https://api.themoviedb.org/3/movie/popular?api_key={API_KEY}&language=en-US&page=1'
 latest_movies_endpoint = f'https://api.themoviedb.org/3/movie/now_playing?api_key={API_KEY}&language=en-US&page=1'
 

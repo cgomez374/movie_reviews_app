@@ -269,6 +269,7 @@ p {
     width: auto;
     height: auto;
     padding: 0;
+    flex-wrap: wrap;
 }
 
 #movie-details ul li {
@@ -295,5 +296,111 @@ p {
     font-size: 1.2rem;
     border: none;
     text-transform: capitalize;
+}
+
+@media (max-width: 1250px) {
+     #show-movie {
+        flex-direction: column;
+    }
+    #show-movie img {
+        height: 50vh;
+        margin: 3vh auto;
+    }
+}
+
+@media (max-width: 1150px) {
+    .nav ul {
+        width: 100%;
+    }
+     #movie-details {
+        width: 100%;
+    }
+}
+
+@media (max-width: 800px) {
+    #showcase h1, h4 {
+        padding: 0;
+        margin: 0 auto;
+    }
+
+    #new_review_content, #edit_review_content {
+        width: 100%;
+    }
+}
+
+@media (max-width: 570px) {
+    #showcase h1, h4 {
+        font-size: 1.5rem;
+    }
+
+    .nav ul {
+        justify-content: center;
+    }
+    .nav ul li a {
+        font-size: 0.8rem;
+
+    }
+    #show-movie {
+        width: 80%;
+    }
+
+    #movie-details, .reviews, h4 {
+        font-size: 0.8rem;
+    }
+    .categories h3 {
+        font-size: 1.5rem;
+    }
+
+    .subtitle {
+        margin: 2vh auto;
+        text-align: center;
+    }
+
+    .form input {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 495px) {
+    #showcase, .categories {
+        width: 90%;
+        height: auto;
+    }
+}
+
+@media (max-width: 380px) {
+    .nav {
+        height: auto;
+    }
+    .nav ul {
+        flex-direction: column;
+    }
+
+    #showcase h1, h4, .categories h3 {
+        font-size: 1rem;
+        text-align: center;
+    }
+
+    #movie-details h2, h4, p, ul li p, .reviews {
+        font-size: 0.8rem;
+    }
+
+    #new_review_content, #edit_review_content {
+        font-size: 0.8rem;
+    }
+
+    .form button {
+        width: 70%;
+        height: auto;
+    }
+
+    .div a button {
+        height: auto;
+    }
+
+    .categories ul li {
+        width: 60%;
+        height: auto;
+    }
 }
 
