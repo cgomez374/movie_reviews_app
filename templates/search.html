@@ -2,8 +2,8 @@
 
 {% block content %}
 
-<div class="subtitle">
-    <h2>search for a movie</h2>
+<div class="">
+    <h2 class="subtitle">search for a movie</h2>
 </div>
 <form class="form" action="{{ url_for('search_movie') }}" method="POST">
     <input type="text" placeholder="Enter movie title" name="title" required>

@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<div class="col div">
+<div class="col">
     <div id="show-movie">
         <div>
             <img src="https://image.tmdb.org/t/p/w500/{{ movie['poster_path'] }}" alt="movie poster">
@@ -13,15 +13,15 @@
             <p>{{ movie['overview'] }}</p>
         </div>
     </div>
-    <div class="div">
+    <div class="div col">
         <h3 class="sub-subtitle">reviews</h3>
         {% if logged_in and not has_reviewed %}
         <a href="{{ url_for('new_review', movie_id=movie.id) }}">
-            <button>write a review for this movie</button>
+            <button>write a review</button>
         </a>
         {% elif logged_in and has_reviewed %}
         <a href="{{ url_for('edit_review', current_user_review_id=current_user_review_id) }}">
-            <button>edit your review for this movie</button>
+            <button>edit your review</button>
         </a>
         {% endif %}
         {% if reviews %}
@@ -33,9 +33,9 @@
             </li>
             {% endfor %}
             {% elif not reviews and not logged_in %}
-            <li class="">
-                <p><a href="{{ url_for('register') }}">register to leave a review!</a></p>
-            </li>
+            <a href="{{ url_for('register') }}">
+                <button>register to review!</button>
+            </a>
         </ul>
         {% endif %}
     </div>

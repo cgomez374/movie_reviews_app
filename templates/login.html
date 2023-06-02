@@ -3,7 +3,7 @@
 {% block content %}
 
 <div>
-    <h2>Login</h2>
+    <h2 class="subtitle">Login to your account</h2>
     {% with messages = get_flashed_messages() %}
         {% if messages %}
         <ul class="flashes">
@@ -13,7 +13,7 @@
         </ul>
         {% endif %}
     {% endwith %}
-    <form id="form" method="POST" action="{{ url_for('login') }}" autocomplete="off">
+    <form class="form" method="POST" action="{{ url_for('login') }}" autocomplete="off">
         <input type="email"
                name="email"
                placeholder="email"

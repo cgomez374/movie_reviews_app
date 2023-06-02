@@ -88,7 +88,6 @@ def browse_all_movies(current_page):
                f'&region=us&primary_release_year=2023&sort_by=primary_release_date.desc'
     response = requests.get(endpoint)
     if response.status_code == 200:
-        # print(len(response.json()['results']))
         movies = response.json()['results']
     else:
         print(response.status_code)
@@ -103,11 +102,11 @@ def register():
     if request.method == 'POST':
         # Build the user model
         new_user = User(
-            name=request.form.get('first_name') + ' ' + request.form.get('last_name'),
-            email=request.form.get('email')
+            name=request.form.get('first_name').strip() + ' ' + request.form.get('last_name').strip(),
+            email=request.form.get('email').strip()
         )
         # set the password
-        new_user.set_password(request.form.get('password'))
+        new_user.set_password(request.form.get('password').strip())
 
         # add to db
         db.session.add(new_user)
