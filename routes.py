@@ -117,6 +117,7 @@ def register():
             name=request.form.get('first_name').strip() + ' ' + request.form.get('last_name').strip(),
             email=request.form.get('email').strip()
         )
+        # new_password = request.form.get('password')
         # set the password
         new_user.set_password(request.form.get('password').strip())
         # add to db

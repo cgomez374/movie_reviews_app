@@ -23,11 +23,12 @@
                required>
         <input type="password"
                name="password"
-               placeholder="password (ex. Password123)"
+               placeholder="password (Letters, numbers, and 8 min characters)"
                minlength="8"
                maxlength="16"
-               pattern="[0-9a-fA-F]{8, 16}"
+               pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
                autocomplete="new-password"
+               title="Letters, numbers, and 8 min characters"
                required>
         <button type="submit">register</button>
     </form>
