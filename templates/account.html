@@ -4,22 +4,34 @@
 
 <div class="">
   <h2 class="subtitle">welcome, {{user.name}}!</h2>
+  {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class="flashes">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
   <ul class="div reviews">
-    <li class="">email: {{ user.email }}</li>
+    <li>email: {{ user.email }}</li>
+    <li>date joined: {{ user.date_joined.date() }}</li>
+    <li><a href="{{ url_for('change_password') }}">change password</a></li>
+    <li><a href="{{ url_for('delete_account') }}" onclick="alert('Please Confirm Again');">delete account</a></li>
   </ul>
-  {% if user.reviews %}
   <h3 class="subtitle">your reviews:</h3>
   <ul class="div reviews">
-    {% for review in user.reviews %}
-    <li>
-      <a href="{{ url_for('show_movie', movie_id=review.movie_id) }}"><p>{{ review.movie_name }}</p></a>
-      <p>{{ review.content }}</p>
-    </li>
-    {% endfor %}
+    {% if reviews %}
+      {% for review in reviews %}
+      <li>
+        <a href="{{ url_for('show_movie', movie_id=review.movie_id) }}"><p>{{ review.movie_name }}</p></a>
+        <p>{{ review.content }}</p>
+      </li>
+      {% endfor %}
+    {% else %}
+    <h3 class="sub-subtitle">no reviews</h3>
+    {% endif %}
   </ul>
-  {% else %}
-  <h3>start reviewing now</h3>
-  {% endif %}
 </div>
 
 {% endblock %}

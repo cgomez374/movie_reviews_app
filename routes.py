@@ -1,6 +1,7 @@
 from main import app, render_template, url_for, redirect, request, flash, login_manager, login_user, LoginManager, \
     login_required, current_user, logout_user, abort
 from models import db, User, Review
+from datetime import datetime
 import requests
 from functools import wraps
 import os
@@ -115,9 +116,9 @@ def register():
         # Build the user model
         new_user = User(
             name=request.form.get('first_name').strip() + ' ' + request.form.get('last_name').strip(),
-            email=request.form.get('email').strip()
+            email=request.form.get('email').strip(),
+            date_joined=datetime.today().date()
         )
-        # new_password = request.form.get('password')
         # set the password
         new_user.set_password(request.form.get('password').strip())
         # add to db
@@ -227,4 +228,39 @@ def delete_review(current_user_review_id):
 @app.route('/account')
 @login_required
 def user_account():
-    return render_template("account.html", user=current_user, logged_in=current_user.is_authenticated)
+    reviews = Review.query.filter_by(author_id=current_user.id).all()
+    return render_template("account.html", user=current_user, reviews=reviews, logged_in=current_user.is_authenticated)
+
+
+@app.route('/change_password', methods=['GET', 'POST'])
+@login_required
+def change_password():
+    if request.method == 'POST':
+        old_password = request.form.get('old_password')
+        new_password = request.form.get('new_password')
+
+        if not current_user.check_password(old_password):
+            flash('old password incorrect')
+        elif old_password == new_password:
+            flash('new password cannot be the old password')
+        else:
+            current_user.set_password(new_password)
+            try:
+                db.session.commit()
+            except:
+                db.session.rollback()
+            flash('password updated successfully')
+            return redirect(url_for('user_account', logged_in=current_user.is_authenticated))
+    return render_template('change_password.html', logged_in=current_user.is_authenticated)
+
+
+@app.route('/delete_account')
+@login_required
+def delete_account():
+    user_to_delete = User.query.get(current_user.id)
+    db.session.delete(user_to_delete)
+    try:
+        db.session.commit()
+    except:
+        db.session.rollback()
+    return redirect(url_for('main', logged_in=current_user.is_authenticated))
