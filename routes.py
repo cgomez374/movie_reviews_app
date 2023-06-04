@@ -130,7 +130,8 @@ def register():
         except:
             db.session.rollback()
             flash('Error in creating account! Please Try again!')
-        return redirect(url_for('login'))
+            return redirect(url_for('register', logged_in=current_user.is_authenticated))
+        return redirect(url_for('login', logged_in=current_user.is_authenticated))
     return render_template('register.html', logged_in=current_user.is_authenticated)
 
 
