@@ -10,7 +10,6 @@
 body {
     background: #222831;
     color: #f2f2f2;
-
 }
 
 ul li {
@@ -323,6 +322,14 @@ p {
         margin: 0 auto;
     }
 
+    .categories ul {
+        width: 100%;
+    }
+
+    .categories ul li {
+        margin: 1vh;
+    }
+
     #new_review_content, #edit_review_content {
         width: 100%;
     }
@@ -347,6 +354,7 @@ p {
     #movie-details, .reviews, h4 {
         font-size: 0.8rem;
     }
+
     .categories h3 {
         font-size: 1.5rem;
     }
@@ -366,9 +374,12 @@ p {
         width: 90%;
         height: auto;
     }
+    .categories ul {
+        width: 100%;
+    }
 }
 
-@media (max-width: 380px) {
+@media (max-width: 385px) {
     .nav {
         height: auto;
     }
@@ -398,9 +409,8 @@ p {
         height: auto;
     }
 
-    .categories ul li {
-        width: 60%;
+    .categories ul {
+        width: 100%;
         height: auto;
     }
 }
-
