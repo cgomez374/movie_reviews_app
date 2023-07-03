@@ -7,7 +7,6 @@ from functools import wraps
 
 # Movies endpoint
 API_KEY = os.getenv('API_KEY')
-# API_KEY = '2981946d7a75ea943692c98fb27ce426'
 popular_movies_endpoint = f'https://api.themoviedb.org/3/movie/popular?api_key={API_KEY}&language=en-US&page=1'
 latest_movies_endpoint = f'https://api.themoviedb.org/3/movie/now_playing?api_key={API_KEY}&language=en-US&page=1'
 
