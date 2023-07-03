@@ -26,11 +26,11 @@
         <h3 class="sub-subtitle">reviews</h3>
         {% if logged_in and not has_reviewed %}
         <a href="{{ url_for('new_review', movie_id=movie.id) }}">
-            <button>write a review</button>
+            <button>new review</button>
         </a>
         {% elif logged_in and has_reviewed %}
         <a href="{{ url_for('edit_review', current_user_review_id=current_user_review_id) }}">
-            <button>edit your review</button>
+            <button>edit review</button>
         </a>
         {% endif %}
         {% if reviews %}

@@ -4,6 +4,15 @@
 
 <div>
   <h2 class="subtitle">write a review</h2>
+  {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class="flashes">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
   <form class="form" method="POST" action="{{ url_for('new_review', movie_id=movie_id) }}" autocomplete="off">
     <textarea name="content"
               id="new_review_content"
