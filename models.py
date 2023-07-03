@@ -28,7 +28,7 @@ class User(db.Model, UserMixin):
 
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String(200), index=False, unique=False, nullable=False)
+    content = db.Column(db.String(300), index=False, unique=False, nullable=False)
     movie_name = db.Column(db.String(100), index=True, unique=False, nullable=False)
     movie_id = db.Column(db.Integer, index=True, unique=False, nullable=False)
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))

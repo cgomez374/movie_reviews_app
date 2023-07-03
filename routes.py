@@ -32,8 +32,6 @@ def is_author(function):
 
 @app.route('/')
 def main():
-    # db.drop_all()
-    db.create_all()
     popular_movies_response = requests.get(popular_movies_endpoint)
     latest_movies_response = requests.get(latest_movies_endpoint)
     if popular_movies_response.status_code == 200 and latest_movies_response.status_code == 200:
@@ -175,7 +173,6 @@ def new_review(movie_id):
                 movie_id=movie_id,
                 author_id=int(current_user.id)
             )
-
             # add to db
             db.session.add(review)
 
