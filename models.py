@@ -1,11 +1,13 @@
-from main import app, UserMixin
+from main import app, UserMixin, os
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 
 # Configuration
 db = SQLAlchemy()
+DATABASE_URL = os.getenv('DATABASE_URL')
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
+# postgresql://movie_reviews_db_user:U3k9ApBGOO8IisPRCkWkAWRBqC2DF4uC@dpg-cihgdllgkuvojjeigi2g-a.oregon-postgres.render.com/movie_reviews_db
 
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///movie_reviews.db"
 
 db.init_app(app)
 

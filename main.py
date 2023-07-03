@@ -1,6 +1,6 @@
 from flask import Flask, render_template, url_for, redirect, request, flash, abort
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
-
+import os
 # Flask object
 app = Flask(__name__)
 app.secret_key = 'secret_key'

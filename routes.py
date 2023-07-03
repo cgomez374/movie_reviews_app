@@ -1,16 +1,15 @@
 from main import app, render_template, url_for, redirect, request, flash, login_manager, login_user, LoginManager, \
-    login_required, current_user, logout_user, abort
+    login_required, current_user, logout_user, abort, os
 from models import db, User, Review
 from datetime import datetime
 import requests
 from functools import wraps
-import os
 
 # Movies endpoint
 API_KEY = os.getenv('API_KEY')
+# API_KEY = '2981946d7a75ea943692c98fb27ce426'
 popular_movies_endpoint = f'https://api.themoviedb.org/3/movie/popular?api_key={API_KEY}&language=en-US&page=1'
 latest_movies_endpoint = f'https://api.themoviedb.org/3/movie/now_playing?api_key={API_KEY}&language=en-US&page=1'
-
 
 # Load the user
 @login_manager.user_loader
@@ -35,7 +34,7 @@ def is_author(function):
 @app.route('/')
 def main():
     # db.drop_all()
-    # db.create_all()
+    db.create_all()
     popular_movies_response = requests.get(popular_movies_endpoint)
     latest_movies_response = requests.get(latest_movies_endpoint)
     if popular_movies_response.status_code == 200 and latest_movies_response.status_code == 200:
