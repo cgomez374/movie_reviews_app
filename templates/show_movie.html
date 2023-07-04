@@ -42,9 +42,7 @@
             </li>
             {% endfor %}
             {% elif not reviews and not logged_in %}
-            <a href="{{ url_for('register') }}">
-                <button>register to review!</button>
-            </a>
+            <p>NO REVIEWS YET</p>
         </ul>
         {% endif %}
     </div>
