@@ -111,8 +111,8 @@ def register():
     if request.method == 'POST':
         # Build the user model
         new_user = User(
-            name=request.form.get('first_name').strip() + ' ' + request.form.get('last_name').strip(),
-            email=request.form.get('email').strip(),
+            name=request.form.get('first_name').strip().lower() + ' ' + request.form.get('last_name').strip().lower(),
+            email=request.form.get('email').strip().lower(),
             date_joined=datetime.today().date()
         )
         # set the password
